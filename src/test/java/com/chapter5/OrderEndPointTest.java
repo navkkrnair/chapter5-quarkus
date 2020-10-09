@@ -23,13 +23,29 @@ public class OrderEndPointTest
     @Order(1)
     void testGetCustomersEndPoint()
     {
+        // Create a JSON Object for the Customer
+        JsonObject objCustomer = Json.createObjectBuilder()
+                .add("name", "Krishma")
+                .add("surname", "Ramachandran")
+                .build();
+
+        // Test POST Customer
+        given()
+                .contentType("application/json")
+                .body(objCustomer.toString())
+                .when()
+                .post("/customers")
+                .then()
+                .statusCode(201);
+
+
         // Test GET
         given()
                 .when()
                 .get("/customers")
                 .then()
                 .statusCode(200)
-                .body("$.size()", is(2));
+                .body("$.size()", is(1));
     }
 
     @Test
