@@ -1,28 +1,19 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-  name: chapter5-deployment
+  name: chapter5-pod
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: chapter5
-  template:
-    metadata:
-      labels:
-        app: chapter5
-    spec:
-      containers:
-        - name: chapter5
-          image: navkkrnair/chapter5
-          ports:
-            - name: chapter5-port
-              containerPort: 8080
-          env:
-            - name: MYSQL_SERVICE_HOST
-              value: "mysql-service"
-            - name: MYSQL_SERVICE_PORT
-              value: "3306"
+  containers:
+    - name: chapter5
+      image: navkkrnair/chapter5:1.0
+      ports:
+      - name: chapter5-port
+        containerPort: 8080
+      env:
+        - name: MYSQL_SERVICE_HOST
+          value: mysql-service
+        - name: MYSQL_SERVICE_PORT
+          value: "3306"
 
 ---
 
@@ -33,43 +24,10 @@ metadata:
   labels:
     app: chapter5
 spec:
+  type: LoadBalancer
   selector:
     app: chapter5
   ports:
     - name: service-port
       port: 80
       targetPort: chapter5-port
-
----
-
-apiVersion: v1
-kind: Pod
-metadata:
-  name: mysqlserver
-  labels:
-    app: mysql
-spec:
-  containers:
-    - name: mysql
-      image: mysql:latest
-      ports:
-        - name: mysql-port
-          containerPort: 3306
-
-
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql-service
-  labels:
-    app: mysql-service
-spec:
-  selector:
-    app: mysql
-  ports:
-    - name: mysql-service-port
-      port: 3306
-      targetPort: mysql-port
