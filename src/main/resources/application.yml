@@ -1,17 +1,36 @@
-quarkus:
-  datasource:
-    url: jdbc:mysql://${MYSQL_SERVICE_HOST:localhost}:${MYSQL_SERVICE_PORT:3306}/quarkusdb
-    driver: com.mysql.cj.jdbc.Driver
-    username: root
-    password: root
-    initial-size: 1
-    min-size: 2
-    max-size: 8
-  hibernate-orm:
-    database:
-      generation: update
-    log:
-      sql: false
+"%dev":
+  quarkus:
+    datasource:
+      url: jdbc:mysql://${MYSQL_SERVICE_HOST:localhost}:${MYSQL_SERVICE_PORT:3306}/quarkusdb
+      driver: com.mysql.cj.jdbc.Driver
+      username: root
+      password: root
+      initial-size: 1
+      min-size: 2
+      max-size: 8
+    hibernate-orm:
+      database:
+        generation: update
+      log:
+        sql: false
+
+---
+
+"%prod":
+  quarkus:
+    datasource:
+      url: jdbc:mysql://${MYSQL_SERVICE_HOST:localhost}:${MYSQL_SERVICE_PORT:3306}/quarkusdb
+      driver: com.mysql.cj.jdbc.Driver
+      username: root
+      password: root
+      initial-size: 1
+      min-size: 2
+      max-size: 8
+    hibernate-orm:
+      database:
+        generation: update
+      log:
+        sql: false
 
 ---
 
